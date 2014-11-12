@@ -10,10 +10,14 @@ import javafx.stage.Stage;
 
 public class ScoutingClient extends Application {
 
+	private static Stage appStage;
+	
 	@Override
 	public void start(Stage primaryStage) {
 		
 		try {
+			ScoutingClient.appStage = primaryStage;
+			
 			Parent root = FXMLLoader.load(getClass().getResource("xml/Application.fxml"));
 			
 			Scene scene = new Scene(root);
@@ -29,6 +33,10 @@ public class ScoutingClient extends Application {
 		
 	}
 
+	public static Stage getStage() {
+		return appStage;
+	}
+	
 	public static void main(String[] args) {
 		launch(args);
 	}
