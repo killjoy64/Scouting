@@ -16,7 +16,7 @@ public class CommandStart extends Command {
 			try {
 				Integer port = Integer.parseInt(args[1]);
 				
-				ServerLog.logInfo("Starting a Scouting server on port " + port);
+				ServerLog.logInfo("Bob marley is da man, yeah. PORT: " + port);
 				new ServerThread(port).start();
 			} catch(NumberFormatException e) {
 				ServerLog.logError("Argument must be an integer");
