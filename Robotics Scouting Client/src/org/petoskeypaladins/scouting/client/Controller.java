@@ -37,8 +37,11 @@ public class Controller implements Initializable {
 	@FXML private TextField textCompetition;
 	@FXML private TextArea textComments;
 	
+<<<<<<< HEAD
 	@FXML private TextField textIP;
 	
+=======
+>>>>>>> origin/master
 	@FXML private RadioButton leftPos;
 	@FXML private RadioButton rightPos;
 	@FXML private RadioButton midPos;
@@ -169,7 +172,11 @@ public class Controller implements Initializable {
        
        try {
     	   	@SuppressWarnings("resource")
+<<<<<<< HEAD
 			Socket client = new Socket(textIP.getText(), 3618);
+=======
+			Socket client = new Socket("127.0.0.1", 3618);
+>>>>>>> origin/master
     	   
     	   	sendMessage("Successfully connected to server");
    	   	
