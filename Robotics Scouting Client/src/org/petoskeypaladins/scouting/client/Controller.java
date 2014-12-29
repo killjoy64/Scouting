@@ -186,11 +186,7 @@ public class Controller implements Initializable {
     	   	InputStream inFromServer = client.getInputStream();
     	   	DataInputStream in = new DataInputStream(inFromServer);
      
-    	   	//while(in.readUTF() != ".disconnect") {
-    	   	receiveMessage(in.readUTF());
-    	   	//}
-           
-    	   	//client.close();
+    	   	receiveMessage(in.readUTF());           
            
        } catch (Exception e1) {
        		sendMessage("Falied to connect to Server");
