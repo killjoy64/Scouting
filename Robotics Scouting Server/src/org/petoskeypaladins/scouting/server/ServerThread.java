@@ -30,10 +30,6 @@ public class ServerThread extends Thread {
 				Socket user = server.accept();
 								
 				ServerLog.logInfo("Client " + user.getLocalAddress().getHostName() + " has connected");
-
-//		        DataOutputStream out = new DataOutputStream(user.getOutputStream());
-//		        out.writeUTF("Thank you for connecting to " + user.getLocalSocketAddress() + "\nGoodbye!");
-//		        user.close();
 				
 				users.add(user);
 				
