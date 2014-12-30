@@ -10,9 +10,12 @@ import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
@@ -37,11 +40,8 @@ public class Controller implements Initializable {
 	@FXML private TextField textCompetition;
 	@FXML private TextArea textComments;
 	
-<<<<<<< HEAD
 	@FXML private TextField textIP;
-	
-=======
->>>>>>> origin/master
+
 	@FXML private RadioButton leftPos;
 	@FXML private RadioButton rightPos;
 	@FXML private RadioButton midPos;
@@ -55,11 +55,27 @@ public class Controller implements Initializable {
 	@FXML private RadioButton lowGoal;
 	@FXML private RadioButton noGoal;
 	
+	@FXML private ComboBox<String> autoBallOne;
+	@FXML private ComboBox<String> autoBallTwo;
+	@FXML private ComboBox<String> autoBallThree;
+	
+	@FXML private TextField teleStrat;
+	@FXML private TextField teleBallPickUp;
+	@FXML private TextField teleBallCycles;
+	@FXML private TextField teleHighMiss;
+	@FXML private TextField teleHighScore;
+	@FXML private TextField teleLowMiss;
+	@FXML private TextField teleLowScore;
+	@FXML private TextField teleTrussMiss;
+	@FXML private TextField teleTrussScore;
+	
 	private ToggleGroup positionGroup;
 	private ToggleGroup hotgoalGroup;
 	private ToggleGroup goalpointGroup;
 	
 	private FileChooser fileChooser;
+	
+	private ObservableList<String> autoCycle;
 	
 	@Override
 	public void initialize(URL url, ResourceBundle bundle) {
@@ -70,6 +86,16 @@ public class Controller implements Initializable {
 		goalpointGroup = new ToggleGroup();
 		
 		assignGroups();
+		
+		autoCycle = FXCollections.observableArrayList();
+		
+		autoCycle.add("Missed");
+		autoCycle.add("Scored");
+		autoCycle.add("Nope");
+		
+		autoBallOne.setItems(autoCycle);
+		autoBallTwo.setItems(autoCycle);
+		autoBallThree.setItems(autoCycle);
 		
 		numberTeam.setText("3618");
 		numberRound.setText("2");
@@ -169,14 +195,10 @@ public class Controller implements Initializable {
 	@FXML
 	public void handle(ActionEvent e) {
        sendMessage("Attempting to connect to server...");
-       
+
        try {
     	   	@SuppressWarnings("resource")
-<<<<<<< HEAD
 			Socket client = new Socket(textIP.getText(), 3618);
-=======
-			Socket client = new Socket("127.0.0.1", 3618);
->>>>>>> origin/master
     	   
     	   	sendMessage("Successfully connected to server");
    	   	
@@ -208,6 +230,18 @@ public class Controller implements Initializable {
 	   	form.addObjectField("Starting Position", ((RadioButton)positionGroup.getSelectedToggle()).getText());
 	   	form.addObjectField("Hot Goal Detection", ((RadioButton)hotgoalGroup.getSelectedToggle()).getText());
 	   	form.addObjectField("Autonomous Goal", ((RadioButton)goalpointGroup.getSelectedToggle()).getText());
+	   	form.addObjectField("Autonomous Ball 1", autoBallOne.getSelectionModel().getSelectedItem());
+	   	form.addObjectField("Autonomous Ball 2", autoBallTwo.getSelectionModel().getSelectedItem());
+	   	form.addObjectField("Autonomous Ball 3", autoBallTwo.getSelectionModel().getSelectedItem());
+	   	form.addObjectField("Teleop Strategy", teleStrat.getText());
+	   	form.addObjectField("Teleop Ball Pick-Up Rating", teleBallPickUp.getText());
+	   	form.addObjectField("Teleop Ball Cycles Completed", teleBallCycles.getText());
+	   	form.addObjectField("Teleop High Misses", teleHighMiss.getText());
+	   	form.addObjectField("Teleop High Scores", teleHighScore.getText());
+	   	form.addObjectField("Teleop Low Misses", teleLowMiss.getText());
+	   	form.addObjectField("Teleop Low Scores", teleLowScore.getText());
+	   	form.addObjectField("Teleop Truss Fails", teleTrussMiss.getText());
+	   	form.addObjectField("Teleop Truss Scores", teleTrussScore.getText());
 	}
 	
 }
