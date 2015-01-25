@@ -43,6 +43,10 @@ public class ScoutingServer implements Runnable {
 			cmdHandler.execute("help", args);
 		} else if(cmd.equalsIgnoreCase("start")) {
 			cmdHandler.execute("start", args);
+		} else if(cmd.equalsIgnoreCase("avg")) {
+			cmdHandler.execute("avg", args);
+		} else if(cmd.equalsIgnoreCase("list")) {
+			cmdHandler.execute("list", args);
 		}
 	}
 
