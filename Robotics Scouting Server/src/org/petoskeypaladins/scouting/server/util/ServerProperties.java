@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.Properties;
 
+import org.petoskeypaladins.scouting.server.ServerLevel;
 import org.petoskeypaladins.scouting.server.ServerLog;
 
 public class ServerProperties {
@@ -25,20 +26,20 @@ public class ServerProperties {
 
 	public void check() {
 		if (file.exists()) {
-			ServerLog.logInfo("Found server.properties file");
+			ServerLog.log("Found server.properties file", ServerLevel.INFO);
 			try {
 				properties.load(new FileInputStream(file));
 			} catch (Exception ex) {
-				ServerLog.logError("Unable to load server.properties file");
+				ServerLog.log("Unable to load server.properties file", ServerLevel.ERROR);
 			}
 		} else {
-			ServerLog.logInfo("Creating server.properties file");
+			ServerLog.log("Creating server.properties file", ServerLevel.INFO);
 			try {
 				file.createNewFile();
 				
 				properties.load(new FileInputStream(file));
 			} catch (IOException e) {
-				ServerLog.logError("Couldn't create server.properties file, contact an administrator");
+				ServerLog.log("Couldn't create server.properties file, contact an administrator", ServerLevel.ERROR);
 			}
 		}
 		

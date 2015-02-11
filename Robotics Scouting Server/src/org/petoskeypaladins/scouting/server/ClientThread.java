@@ -40,7 +40,13 @@ public class ClientThread implements Runnable {
 			if(formFile.exists()) {
 				formFile.delete();
 			} else {
+				if(!formDir.exists()) {
+					System.out.println("Directory not found");
+					formDir.mkdirs();
+					System.out.println("Created directory");
+				}
 				formFile.createNewFile();
+				System.out.println("Created directory");
 			}
 			// Put all of the form fields into the file
 			

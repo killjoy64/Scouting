@@ -32,6 +32,16 @@ public class ScoutingServer implements Runnable {
 		serverProp.check();
 		
 		Properties.FORM_FILE_PATH = serverProp.getPropFile().getProperty("form-file-path");		
+		Properties.LOG_FILE_PATH = serverProp.getPropFile().getProperty("log-file-path");
+				
+		if(Properties.FORM_FILE_PATH == "" || Properties.FORM_FILE_PATH == null) {
+			Properties.FORM_FILE_PATH = "C:/Users/Scouting/Data";
+		}
+		
+		if(Properties.LOG_FILE_PATH == "" || Properties.LOG_FILE_PATH == null) {
+			Properties.LOG_FILE_PATH = "C:/Users/Scouting/Logs";
+		}
+		
 	}
 	
 	public void acceptInput(String cmd, String[] args) {
@@ -52,10 +62,9 @@ public class ScoutingServer implements Runnable {
 
 	@Override
 	public void run() {
-		ServerLog.logInfo("Robitcs Scouting Server v1.0");
-		
 		loadProperties();
-		
+		ServerLog.createFile("Testing Log File");
+		ServerLog.logInfo("Robitcs Scouting Server v1.0");
 		ServerLog.logInfo("Type 'help' for a list of commands");
 		
 		Scanner scanner = new Scanner(System.in);
