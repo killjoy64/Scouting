@@ -1,0 +1,3 @@
+-Be able to enter in Team's number, but the server will translate that into a team name
+-This might be another program to be able to enter in this data into a readable format
+-Use the server to filter through the information

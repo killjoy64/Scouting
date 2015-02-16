@@ -16,6 +16,8 @@ public class ServerThread extends Thread {
 			server = new ServerSocket(port);
 			users = new ArrayList<Socket>();
 			
+			ScoutingServer.setServerThread(this);
+			
 			ServerLog.logInfo("Successfully started Scouting Server on port " + port);
 			ServerLog.logInfo("Scouting Server is now accepting users");
 		} catch (IOException e) {
@@ -26,18 +28,38 @@ public class ServerThread extends Thread {
 	@Override
 	public void run() {
 		while(true) {
-			try {					
-				Socket user = server.accept();
-								
-				ServerLog.logInfo("Client " + user.getLocalAddress().getHostName() + " has connected");
-				
-				users.add(user);
-				
-				(new Thread(new ClientThread(user))).start();
-			} catch(IOException e) {
-				ServerLog.logError("Error receiving messages from client, contact Kyle Immediately!");
+			if(!server.isClosed()) {
+				try {		
+					
+							Socket user = server.accept();
+						ServerLog.logInfo("Client " + user.getLocalAddress().getHostName() + " has connected");
+						
+						users.add(user);
+						
+						//ScoutingServer.setUserSocketList((Socket[]) users.toArray()); 
+						
+						(new Thread(new ClientThread(user))).start();
+				} catch(IOException e) {
+					ServerLog.logError("Error receiving messages from client, contact Kyle Immediately!");
+				}
 			}
-			
+		}
+	}
+	
+	public ServerSocket getServer() {
+		return server;
+	}
+	
+	public void close() {
+		try {
+			System.out.println("Closed connection");
+			for(Socket u : users) {
+				u.close();
+			}
+			server.close();
+			System.out.println(server.isClosed());
+			this.join();
+		} catch (Exception e) {
 		}
 	}
 	

@@ -1,5 +1,9 @@
 package org.petoskeypaladins.scouting.server;
 
+import java.net.Socket;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 import org.petoskeypaladins.scouting.server.util.Properties;
@@ -10,6 +14,9 @@ public class ScoutingServer implements Runnable {
 	private CommandHandler cmdHandler;
 	private Thread scouting;
 	private ServerProperties serverProp;
+	
+	private static ServerThread server;
+	private static Socket[] userSockets;
 	
 	public static void main(String[] args) {
 		ScoutingServer server = new ScoutingServer();
@@ -57,27 +64,51 @@ public class ScoutingServer implements Runnable {
 			cmdHandler.execute("avg", args);
 		} else if(cmd.equalsIgnoreCase("list")) {
 			cmdHandler.execute("list", args);
+		} else if(cmd.equalsIgnoreCase("close")) {
+			cmdHandler.execute("close", args);
 		}
 	}
 
 	@Override
 	public void run() {
 		loadProperties();
-		ServerLog.createFile("Testing Log File");
-		ServerLog.logInfo("Robitcs Scouting Server v1.0");
+		
+		DateFormat dateFormat = new SimpleDateFormat("[yyyy_MM_dd]-[HH.mm.ss]");
+		Date date = new Date();
+				
+		ServerLog.createFile(dateFormat.format(date) + "");
+		ServerLog.logInfo("Robotics Scouting Server v1.0");
 		ServerLog.logInfo("Type 'help' for a list of commands");
 		
 		Scanner scanner = new Scanner(System.in);
 		
+		String line = "";
 		String cmd = "";
 		String[] args;
 		
 		while(scanner.hasNextLine()) {
-			cmd = scanner.nextLine();
-			args = cmd.split("\\s+");
+			line = scanner.nextLine();
+			args = line.split("\\s+");
 			cmd = args[0];
+			ServerLog.store("[CMD][Server]: \'" + line + "\'");
 			acceptInput(cmd, args);
 		}
 	}
+	
+	public static void setServerThread(ServerThread server) {
+		ScoutingServer.server = server;
+	}
+	
+	public static ServerThread getServerThread() {
+		return server;
+	}
 
+	public static void setUserSocketList(Socket[] users) {
+		ScoutingServer.userSockets = users;
+	}
+	
+	public static Socket[] getUserSockets() {
+		return userSockets;
+	}
+	
 }

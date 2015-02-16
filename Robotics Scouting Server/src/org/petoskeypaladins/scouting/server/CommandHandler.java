@@ -3,6 +3,7 @@ package org.petoskeypaladins.scouting.server;
 import java.util.ArrayList;
 
 import org.petoskeypaladins.scouting.server.commands.Command;
+import org.petoskeypaladins.scouting.server.commands.CommandClose;
 import org.petoskeypaladins.scouting.server.commands.CommandHelp;
 import org.petoskeypaladins.scouting.server.commands.CommandList;
 import org.petoskeypaladins.scouting.server.commands.CommandStart;
@@ -14,6 +15,8 @@ public class CommandHandler {
 	private CommandHelp help;
 	private CommandStart start;
 	private CommandList list;
+	private CommandClose close;
+	
 	private boolean found = false;
 
 	
@@ -23,6 +26,7 @@ public class CommandHandler {
 		help = new CommandHelp();
 		start = new CommandStart();
 		list = new CommandList();
+		close = new CommandClose();
 		
 		register();
 	}
@@ -31,6 +35,7 @@ public class CommandHandler {
 		commands.add(help);
 		commands.add(start);
 		commands.add(list);
+		commands.add(close);
 	}
 	
 	public void execute(String input, String[] args) {

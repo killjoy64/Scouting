@@ -4,6 +4,9 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.petoskeypaladins.scouting.server.util.Properties;
 
@@ -16,6 +19,8 @@ public class ServerLog {
 	private static File logDir;
 	private static File logFile;
 	private static String loc = "";
+	
+	private static DateFormat dateFormat = new SimpleDateFormat("[HH:mm:ss]");
 	
 	public static void createFile(String date) {
 		logDir = new File(Properties.LOG_FILE_PATH);
@@ -50,26 +55,37 @@ public class ServerLog {
 		}
 	}
 	
+	public static void log(String input) {
+		System.out.println(input);
+	}
+	
+	public static void store(String input) {
+		String msg = input;
+		
+		Date date = new Date();
+		storeMsg(dateFormat.format(date) + msg);
+	}
+	
 	public static void logInfo(String input) {
 		String msg = INFO + input;
 		System.out.println(INFO + input);
-		storeMsg(msg);
+		
+		Date date = new Date();
+		storeMsg(dateFormat.format(date) + msg);
 	}
 	
 	public static void logWarn(String input) {
 		String msg = WARN + input;
 		System.out.println(WARN + input);
-		storeMsg(msg);
+		Date date = new Date();
+		storeMsg(dateFormat.format(date) + msg);
 	}
 	
 	public static void logError(String input) {
 		String msg = ERROR + input;
 		System.out.println(ERROR + input);
-		storeMsg(msg);
-	}
-	
-	public static void log(String input) {
-		System.out.println(input);
+		Date date = new Date();
+		storeMsg(dateFormat.format(date) + msg);
 	}
 	
 	private static void storeMsg(String message) {

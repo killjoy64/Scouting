@@ -54,7 +54,8 @@ public class ClientThread implements Runnable {
 			BufferedWriter bfIO = new BufferedWriter(formIO);
 			
 			for(String field : form.readAll()) {
-				bfIO.write(field + " \n");
+				bfIO.write(field + "");
+				bfIO.newLine();
 			}
 			
 			bfIO.close();
