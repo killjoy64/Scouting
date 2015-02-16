@@ -25,7 +25,7 @@ public class CommandList extends Command {
 	@Override
 	public void execute(String[] args) {
 		// e.g. list spos 3618
-		if(args.length == 3) {						
+		if(args.length >= 3) {						
 			File f = new File(Properties.FORM_FILE_PATH);
 					
 			ArrayList<File> formFiles = new ArrayList<File>();
@@ -46,11 +46,12 @@ public class CommandList extends Command {
 					// We found the query of the first criteria field
 					// Eventually want to getObjectField(team_number) from round_number when it equals 5
 						if(tempForm.getObjectField(eQuery).equals(query[1].replace("_", " "))) {
+							String result = (String)tempForm.getObjectField(dataQuery);
 							if(args.length == 4) {
 								if(args[3].equalsIgnoreCase("true")) {
-									if(!queries.contains(dataQuery)) {
+									if(queries.contains(tempForm.getObjectField(dataQuery)) == false) {
 										ServerLog.logInfo("Result of " + args[2] + " where " + query[0] + " = " + query[1] + ": " + tempForm.getObjectField(dataQuery));								
-										queries.add(dataQuery);
+										queries.add((String) tempForm.getObjectField(dataQuery));
 									}
 								}
 							} else {
@@ -59,7 +60,8 @@ public class CommandList extends Command {
 						}
 					}
 					
-				} catch (Exception e) {;				
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			}	
 		}

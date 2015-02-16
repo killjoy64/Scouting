@@ -57,7 +57,7 @@ public class ScoutingForm implements Serializable {
 	}
 	
 	public void addObjectField(String field, Object o) {
-		singleObjectFields.put(field.toLowerCase(), o);
+		singleObjectFields.put(field.toLowerCase(), o.toString().toLowerCase());
 	}
 	
 	public void addObjectFields(String field, String text) {
