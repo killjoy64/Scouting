@@ -1,3 +1,7 @@
 -Be able to enter in Team's number, but the server will translate that into a team name
 -This might be another program to be able to enter in this data into a readable format
 -Use the server to filter through the information
+
+**Eventually create a 'create' command that creates a temporary directory for files organized by a certain order
+	-mkdir something here eventually
+	-This basically works like a table and can be outputted through .html files (Hopefully)

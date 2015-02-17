@@ -25,9 +25,9 @@ public class ClientThread implements Runnable {
 				
 			ScoutingForm form = (ScoutingForm) input.readObject();
 			
-			String competition 	= (String) form.getObjectField("Competition");
-			String team			= (String) form.getObjectField("Team Number");
-			String round		= (String) form.getObjectField("Round Number");
+			String competition 	= (String) form.getObjectField("competition");
+			String team			= (String) form.getObjectField("team number");
+			String round		= (String) form.getObjectField("round number");
 			
 			File formDir = new File(Properties.FORM_FILE_PATH);
 			
