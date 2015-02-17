@@ -1,14 +1,18 @@
 This is the Scouting Program developed by Kyle Flynn originally for FRC team 3618, the Petoskey Paladins
 
 Client:
+
 	Hardware: 
+	
 		-Probably a really crappy laptop
 		-Name each laptop Red 1-3 and Blue 1-3
 		-Ethernet port to connect to hub which connects to server
 		-Preferably windows laptops
+
 	Software:
+	
 		-GUI baed
-		-Must be VERY suser friendly
+		-Must be VERY user friendly
 		-All requirements from Google Forms, plus more simplicity
 		-Using JFRames for the main layout - NOT ANYMORE SUCK IT JFRAME
 		-Have data fields as the main page
@@ -29,7 +33,10 @@ Client:
 		-Sort Team information/notes
 		-Possible text line to enter in commands? Like server?
 	
+
 Server:
+
+
 	Hardware:
 		-Old computer/laptop, preferably small. (Raspberry PI?)
 		-At least some amount of storage (100GB+?)
@@ -56,6 +63,12 @@ Ideas:
 	-Time stamps for consoles/output areas
 	-Create a log file for sessions of whenever client or server is opened, outputted to a file ([Server]2014-11-3-7:24PM.log)
 	
+**NEW 2015 SCOUTING CLIENT TODOS**
+-Statistics analysis
+-Match, Competition, and Robot AutoFeed - (NEEDS SO MUCH FOOLPROOFING)
+	-Do this through a simple command-based program, or simple GUI where they just enter in team numbers for Red1, Red2, Blue 1, Blue 2, etc.
+ 
+	
 Accomplishments:
 	(9/20/2014)(9:21PM) - Finished framework for the server
 	(10/22/2014) (6:45PM) - Finished basic client GUI w/ JavaFX
@@ -65,4 +78,6 @@ Accomplishments:
 	(11/3/2014) (8:27PM) - Finished very basic configuration outlines
 	(11/8/2014) (12:42AM) - Fixed weird bug that broke the program
 	(11/11/2014) (5:51PM) - Finished main client
+	(12/30/2014) (TIMEPM) - Test main client and server: Successful
+	(2/16/2015) (11:17PM) - Finished the final query process that will happen, fixed the message storing system, and cleaned up code
 		
