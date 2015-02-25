@@ -40,13 +40,18 @@ public class ScoutingServer implements Runnable {
 		
 		Properties.FORM_FILE_PATH = serverProp.getPropFile().getProperty("form-file-path");		
 		Properties.LOG_FILE_PATH = serverProp.getPropFile().getProperty("log-file-path");
-				
+		Properties.TEMP_FILE_PATH = serverProp.getPropFile().getProperty("tmp-file-path");		
+		
 		if(Properties.FORM_FILE_PATH == "" || Properties.FORM_FILE_PATH == null) {
 			Properties.FORM_FILE_PATH = "C:/Users/Scouting/Data";
 		}
 		
 		if(Properties.LOG_FILE_PATH == "" || Properties.LOG_FILE_PATH == null) {
 			Properties.LOG_FILE_PATH = "C:/Users/Scouting/Logs";
+		}
+		
+		if(Properties.TEMP_FILE_PATH == "" || Properties.TEMP_FILE_PATH == null) {
+			Properties.TEMP_FILE_PATH = "C:/Users/Scouting/tmp";
 		}
 		
 	}
@@ -66,6 +71,10 @@ public class ScoutingServer implements Runnable {
 			cmdHandler.execute("list", args);
 		} else if(cmd.equalsIgnoreCase("close")) {
 			cmdHandler.execute("close", args);
+		} else if(cmd.equalsIgnoreCase("sort")) {
+			cmdHandler.execute("sort", args);
+		} else {
+			ServerLog.logError("Command not found");
 		}
 	}
 

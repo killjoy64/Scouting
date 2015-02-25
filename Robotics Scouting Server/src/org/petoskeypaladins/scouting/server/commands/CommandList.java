@@ -1,15 +1,8 @@
 package org.petoskeypaladins.scouting.server.commands;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.petoskeypaladins.scouting.server.ServerLog;
 import org.petoskeypaladins.scouting.server.util.Properties;
@@ -28,13 +21,11 @@ public class CommandList extends Command {
 		if(args.length >= 3) {						
 			File f = new File(Properties.FORM_FILE_PATH);
 					
-			ArrayList<File> formFiles = new ArrayList<File>();
 			ScoutingForm tempForm;
 			
 			ArrayList<String> queries = new ArrayList<String>();
 			
 			for(File file : f.listFiles()) {
-				formFiles.add(file);
 				try {
 					tempForm = new ScoutingForm(file.getPath());					
 					
@@ -46,7 +37,6 @@ public class CommandList extends Command {
 					// We found the query of the first criteria field
 					// Eventually want to getObjectField(team_number) from round_number when it equals 5
 						if(tempForm.getObjectField(eQuery).equals(query[1].replace("_", " "))) {
-							String result = (String)tempForm.getObjectField(dataQuery);
 							if(args.length >= 4) {
 								if(args[3].equalsIgnoreCase("false")) {
 									if(queries.contains(tempForm.getObjectField(dataQuery)) == false) {
@@ -86,6 +76,8 @@ public class CommandList extends Command {
 				}
 			}	
 			queries.clear();
+		} else {
+			ServerLog.logError(getUsage());
 		}
 	}
 }
