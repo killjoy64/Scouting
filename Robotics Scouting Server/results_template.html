@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Scouting Server Results</title>
+		<meta charset = "UTF-8"/>
+		<style>
+			body {
+				background-color:#036;
+				font-family: arial, sans-serif;
+			}
+			#wrapper {
+				margin-top:15px;
+				margin-left:auto;
+				margin-right:auto;
+				width:870px;
+				background-color:#FFF;
+			}
+			#wrapper #title h1 {
+				text-align:center;
+			}
+			#wrapper #content {
+				margin-right:auto;
+				margin-left:auto;
+				width:850px;
+				height:100%;
+			}
+			.footer {
+				margin-left:auto;
+				margin-right:auto;
+				width:900px;
+				text-align:center;
+				color:#FFF;
+			}
+			table {
+				width:845px;
+				text-align:center;
+			}
+			table .headings {
+				font-weight:bold;
+			}
+			table tr td {
+				width:25px;
+			}
+		</style>
+	</head>	
+	<body>
+		<div id = "wrapper">
+			<div id = "title">
+				<h1>Petoskey Paladins - Scouting Data Page Results</h1>
+				<p><h3>Your search results for <$QUERY></h3></p>
+			</div>
+			<div id = "content">
+				<table>
+					<tr class = "headings">
+						<td><$QUERY_1></td>
+						<td><$QUERY_2></td>
+						<td><$QUERY_3></td>
+						<td><$QUERY_4></td>
+					</tr>
+					<$DATA>
+				</table>
+			</div>
+		</div>
+		<div class = "footer">
+			<p>HTML Results Page created by <i>Kyle Flynn</i> &copy;2015</p>
+		</div>
+	</body>
+</html>
