@@ -102,4 +102,8 @@ public class ServerLog {
 		}
 	}
 	
+	public static DateFormat getDateFormat() {
+		return dateFormat;
+	}
+	
 }

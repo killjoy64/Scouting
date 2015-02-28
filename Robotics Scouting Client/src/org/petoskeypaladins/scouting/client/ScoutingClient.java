@@ -23,7 +23,7 @@ public class ScoutingClient extends Application {
 			Scene scene = new Scene(root);
 			
 			primaryStage.setScene(scene);
-			primaryStage.setTitle("Scouting Program 2014 - v0.1");
+			primaryStage.setTitle("Scouting Program 2015 - Recycle Rush (v0.1 ALPHA)");
 			primaryStage.setResizable(false);
 			primaryStage.show();
 				

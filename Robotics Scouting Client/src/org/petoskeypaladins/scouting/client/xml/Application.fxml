@@ -141,6 +141,11 @@
                 <MenuItem fx:id="connect" mnemonicParsing="false" onAction="#handle" text="Send Data" />
               </items>
             </Menu>
+            <Menu mnemonicParsing="false" text="Teams">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Import List" />
+              </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
               <MenuItem fx:id="helpAbout" mnemonicParsing="false" onAction="#showAbout" text="About" />

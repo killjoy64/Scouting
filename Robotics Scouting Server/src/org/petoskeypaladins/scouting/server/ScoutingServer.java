@@ -41,6 +41,7 @@ public class ScoutingServer implements Runnable {
 		Properties.FORM_FILE_PATH = serverProp.getPropFile().getProperty("form-file-path");		
 		Properties.LOG_FILE_PATH = serverProp.getPropFile().getProperty("log-file-path");
 		Properties.TEMP_FILE_PATH = serverProp.getPropFile().getProperty("tmp-file-path");		
+		Properties.HTML_FILE_PATH = serverProp.getPropFile().getProperty("html-file-path");
 		
 		if(Properties.FORM_FILE_PATH == "" || Properties.FORM_FILE_PATH == null) {
 			Properties.FORM_FILE_PATH = "C:/Users/Scouting/Data";
@@ -52,6 +53,10 @@ public class ScoutingServer implements Runnable {
 		
 		if(Properties.TEMP_FILE_PATH == "" || Properties.TEMP_FILE_PATH == null) {
 			Properties.TEMP_FILE_PATH = "C:/Users/Scouting/tmp";
+		}
+		
+		if(Properties.HTML_FILE_PATH == "" || Properties.HTML_FILE_PATH == null) {
+			Properties.HTML_FILE_PATH = "C:/Users/Scouting/tmp";
 		}
 		
 	}

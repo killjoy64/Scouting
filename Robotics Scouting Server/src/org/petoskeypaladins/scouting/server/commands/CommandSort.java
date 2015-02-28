@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.petoskeypaladins.scouting.server.ServerLog;
+import org.petoskeypaladins.scouting.server.util.HTMLDocument;
 import org.petoskeypaladins.scouting.server.util.Properties;
 import org.petoskeypaladins.scouting.shared.ScoutingForm;
 
@@ -53,14 +54,26 @@ public class CommandSort extends Command {
 		
 		// End of the file loop
 		
+		StringBuilder data = new StringBuilder();
+		
 		for(String r : results) {
 			for(Entry<File, String> entry : searches.entrySet()) {
 				if(entry.getValue().equalsIgnoreCase(r)) {
 					System.out.println(entry.getValue() + ": " + entry.getKey().getName());
+					data.append("<tr><td>" + entry.getValue() + "</td><td>" + entry.getKey().getName() + "</td>");
 					searches.remove(entry.getKey(), entry.getValue());
 				}
 			}
 		}
+		
+		String[] queries = new String[4];
+		
+		queries[0] = searchField;
+		queries[1] = "file";
+		queries[2] = "";
+		queries[3] = "";
+		
+		new HTMLDocument("[" + searchField + "]" + "sort", queries, data.toString());
 		
 		} else {
 			ServerLog.logError(getUsage());
