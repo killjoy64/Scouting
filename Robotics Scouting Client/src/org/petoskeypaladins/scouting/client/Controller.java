@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -15,14 +16,15 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.RadioButton;
+import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+
+import javax.swing.JOptionPane;
 
 import org.petoskeypaladins.scouting.shared.ScoutingForm;
 
@@ -42,17 +44,26 @@ public class Controller implements Initializable {
 	
 	@FXML private TextField textIP;
 	
+	@FXML private RadioMenuItem r1Alliance;
+	@FXML private RadioMenuItem r2Alliance;
+	@FXML private RadioMenuItem r3Alliance;
+	@FXML private RadioMenuItem b1Alliance;
+	@FXML private RadioMenuItem b2Alliance;
+	@FXML private RadioMenuItem b3Alliance;
+	
+	private ToggleGroup selectedAllianceGroup;
+	
 	private FileChooser fileChooser;
 	
 	private ObservableList<String> autoCycle;
 	
+	private HashMap<String, String> matchList;
+	
 	@Override
 	public void initialize(URL url, ResourceBundle bundle) {
 		fileChooser = new FileChooser();
-		
-//		positionGroup = new ToggleGroup();
-//		hotgoalGroup = new ToggleGroup();
-//		goalpointGroup = new ToggleGroup();
+		selectedAllianceGroup = new ToggleGroup();
+		matchList = new HashMap<String, String>();
 		
 		assignGroups();
 		
@@ -61,10 +72,6 @@ public class Controller implements Initializable {
 		autoCycle.add("Missed");
 		autoCycle.add("Scored");
 		autoCycle.add("Nope");
-		
-//		autoBallOne.setItems(autoCycle);
-//		autoBallTwo.setItems(autoCycle);
-//		autoBallThree.setItems(autoCycle);
 		
 		numberTeam.setText("3618");
 		numberRound.setText("2");
@@ -83,24 +90,12 @@ public class Controller implements Initializable {
 	}
 	
 	public void assignGroups() {
-//		leftPos.setToggleGroup(positionGroup);
-//		rightPos.setToggleGroup(positionGroup);
-//		midPos.setToggleGroup(positionGroup);
-//		goalPos.setToggleGroup(positionGroup);
-//		goalPos.setSelected(true);
-//		goalPos.requestFocus();
-//		
-//		yesHot.setToggleGroup(hotgoalGroup);
-//		noHot.setToggleGroup(hotgoalGroup);
-//		idkHot.setToggleGroup(hotgoalGroup);
-//		noHot.setSelected(true);
-//		noHot.requestFocus();
-//		
-//		highGoal.setToggleGroup(goalpointGroup);
-//		lowGoal.setToggleGroup(goalpointGroup);
-//		noGoal.setToggleGroup(goalpointGroup);
-//		noGoal.setSelected(true);
-//		noGoal.requestFocus();
+		r1Alliance.setToggleGroup(selectedAllianceGroup);
+		r2Alliance.setToggleGroup(selectedAllianceGroup);
+		r3Alliance.setToggleGroup(selectedAllianceGroup);
+		b1Alliance.setToggleGroup(selectedAllianceGroup);
+		b2Alliance.setToggleGroup(selectedAllianceGroup);
+		b3Alliance.setToggleGroup(selectedAllianceGroup);
 	}
 	
 	@FXML 
@@ -147,18 +142,77 @@ public class Controller implements Initializable {
 		numberRound.setText("");
 		textCompetition.setText("");
 		textComments.setText("");
-		
-//		noGoal.setSelected(true);
-//		noGoal.requestFocus();
-//		noHot.setSelected(true);
-//		noHot.requestFocus();
-//		goalPos.setSelected(true);
-//		goalPos.requestFocus();
 	}
 	
 	@FXML 
 	public void showAbout(ActionEvent e) {
 		// Ugh... TODO - Create new XML file for the about window
+	}
+	
+	@FXML
+	public void importList(ActionEvent e) {
+		if(selectedAllianceGroup.getSelectedToggle() != null) {
+			File list = fileChooser.showOpenDialog(ScoutingClient.getStage());
+			
+			if(list != null) {
+				matchList.clear();
+				try {
+					BufferedReader br = new BufferedReader(new FileReader(list));
+					String line = "";
+					
+					String alliance = ((RadioMenuItem)selectedAllianceGroup.getSelectedToggle()).getText();
+					
+					boolean canContinue = false;
+					while((line = br.readLine()) != null) {
+						if(!canContinue) {
+							if(line.contains(alliance)) {
+								canContinue = true;
+							}
+						} else {
+							try {
+								String[] matches = line.split(":")[1].split(",");
+								matchList.put(matches[0], matches[1]);
+							} catch(IndexOutOfBoundsException a) {
+								break;
+							}
+						}
+					}
+					br.close();
+					
+					if(matchList.containsKey("1")) {
+						numberRound.setText("1");
+						numberTeam.setText(matchList.get("1"));
+					}
+					
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				
+			}
+		} else {
+			JOptionPane.showConfirmDialog(null, "Please select an alliance under Teams!", "Are you serious, bro?", JOptionPane.OK_OPTION, JOptionPane.ERROR_MESSAGE);
+		}
+		
+	}
+	
+	@FXML
+	public void submitData(ActionEvent e) {
+		if(!matchList.isEmpty()) {
+			// Send all data blah-blah blah
+			
+			// Start to count up here
+			try {
+				int round = Integer.parseInt(numberRound.getText());
+				round++;
+				System.out.println(round);
+				if(matchList.containsKey(round + "")) {
+					numberRound.setText(round + "");
+					numberTeam.setText(matchList.get(round + ""));
+				}
+			} catch(Exception ex) {
+				ex.printStackTrace();
+			}
+		}
 	}
 	
 	@FXML
@@ -195,22 +249,6 @@ public class Controller implements Initializable {
 		form.addObjectField("Competition", textCompetition.getText());
 	   	form.addObjectField("Team Number", numberTeam.getText());
 	   	form.addObjectField("Round Number", numberRound.getText());
-//	   	form.addObjectField("Comments", textComments.getText());
-//	   	form.addObjectField("Starting Position", ((RadioButton)positionGroup.getSelectedToggle()).getText());
-//	   	form.addObjectField("Hot Goal Detection", ((RadioButton)hotgoalGroup.getSelectedToggle()).getText());
-//	   	form.addObjectField("Autonomous Goal", ((RadioButton)goalpointGroup.getSelectedToggle()).getText());
-//	   	form.addObjectField("Autonomous Ball 1", autoBallOne.getSelectionModel().getSelectedItem());
-//	   	form.addObjectField("Autonomous Ball 2", autoBallTwo.getSelectionModel().getSelectedItem());
-//	   	form.addObjectField("Autonomous Ball 3", autoBallTwo.getSelectionModel().getSelectedItem());
-//	   	form.addObjectField("Teleop Strategy", teleStrat.getText());
-//	   	form.addObjectField("Teleop Ball Pick-Up Rating", teleBallPickUp.getText());
-//	   	form.addObjectField("Teleop Ball Cycles Completed", teleBallCycles.getText());
-//	   	form.addObjectField("Teleop High Misses", teleHighMiss.getText());
-//	   	form.addObjectField("Teleop High Scores", teleHighScore.getText());
-//	   	form.addObjectField("Teleop Low Misses", teleLowMiss.getText());
-//	   	form.addObjectField("Teleop Low Scores", teleLowScore.getText());
-//	   	form.addObjectField("Teleop Truss Fails", teleTrussMiss.getText());
-//	   	form.addObjectField("Teleop Truss Scores", teleTrussScore.getText());
 	}
 	
 }

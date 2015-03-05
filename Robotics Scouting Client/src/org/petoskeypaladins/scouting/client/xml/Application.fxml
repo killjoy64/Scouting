@@ -120,6 +120,7 @@
                </GridPane.margin>
             </TextField>
             <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Add" textAlignment="CENTER" GridPane.columnIndex="6" GridPane.rowIndex="18" />
+            <Button mnemonicParsing="false" onAction="#submitData" text="Submit" GridPane.columnIndex="5" GridPane.rowIndex="26" />
          </children>
       </GridPane>
       <MenuBar maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="800.0">
@@ -143,7 +144,17 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Teams">
               <items>
-                <MenuItem mnemonicParsing="false" text="Import List" />
+                <MenuItem mnemonicParsing="false" onAction="#importList" text="Import List" />
+                  <Menu mnemonicParsing="false" text="Alliance">
+                    <items>
+                        <RadioMenuItem fx:id="r1Alliance" mnemonicParsing="false" text="Red 1" />
+                        <RadioMenuItem fx:id="r2Alliance" mnemonicParsing="false" text="Red 2" />
+                        <RadioMenuItem fx:id="r3Alliance" mnemonicParsing="false" text="Red 3" />
+                        <RadioMenuItem fx:id="b1Alliance" mnemonicParsing="false" text="Blue 1" />
+                        <RadioMenuItem fx:id="b2Alliance" mnemonicParsing="false" text="Blue 2" />
+                        <RadioMenuItem fx:id="b3Alliance" mnemonicParsing="false" text="Blue 3" />
+                    </items>
+                  </Menu>
               </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Help">

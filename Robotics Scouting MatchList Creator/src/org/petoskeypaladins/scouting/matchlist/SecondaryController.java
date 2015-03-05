@@ -1,8 +1,11 @@
 package org.petoskeypaladins.scouting.matchlist;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -93,21 +96,42 @@ public class SecondaryController implements Initializable {
 					while((line = br.readLine()) != null) {
 						if(line.equalsIgnoreCase("Red 1")) {
 							// Eventually filter through to see if it is Red 1 Blue 1 etc.
+							prefix = "r1";
 						} else if(line.equalsIgnoreCase("Red 2")) {
-							
+							prefix = "r2";
 						} else if(line.equalsIgnoreCase("Red 3")) {
-							
+							prefix = "r3";
 						} else if(line.equalsIgnoreCase("Blue 1")) {
-							
+							prefix = "b1";
 						} else if(line.equalsIgnoreCase("Blue 2")) {
-							
+							prefix = "b2";
 						} else if(line.equalsIgnoreCase("Blue 3")) {
-							
+							prefix = "b3";
 						}
+						data.append(prefix + ":" + line + "_LINE_");
 					}
+					br.close();
 				} catch (Exception e1) {
 				}
 			}
+			
+			File masterList = fileChooser.showSaveDialog(MatchListCreator.getStage());
+			
+			if(masterList != null) {
+				try {
+					BufferedWriter br = new BufferedWriter(new FileWriter(masterList));
+					
+					for(String s : data.toString().split("_LINE_")) {
+						br.append(s);
+						br.newLine();
+					}
+					
+					br.close();
+					
+				} catch (IOException e1) {
+				}
+			}
+			
 		}
 	}
 	
