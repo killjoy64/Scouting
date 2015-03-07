@@ -6,6 +6,7 @@ import org.petoskeypaladins.scouting.server.commands.Command;
 import org.petoskeypaladins.scouting.server.commands.CommandClose;
 import org.petoskeypaladins.scouting.server.commands.CommandHelp;
 import org.petoskeypaladins.scouting.server.commands.CommandList;
+import org.petoskeypaladins.scouting.server.commands.CommandSeeAll;
 import org.petoskeypaladins.scouting.server.commands.CommandSort;
 import org.petoskeypaladins.scouting.server.commands.CommandStart;
 
@@ -18,6 +19,7 @@ public class CommandHandler {
 	private CommandList list;
 	private CommandClose close;
 	private CommandSort sort;
+	private CommandSeeAll seeall;
 	
 	private boolean found = false;
 
@@ -30,6 +32,7 @@ public class CommandHandler {
 		list = new CommandList();
 		close = new CommandClose();
 		sort = new CommandSort();
+		seeall = new CommandSeeAll();
 		
 		register();
 	}
@@ -40,6 +43,7 @@ public class CommandHandler {
 		commands.add(list);
 		commands.add(close);
 		commands.add(sort);
+		commands.add(seeall);
 	}
 	
 	public void execute(String input, String[] args) {

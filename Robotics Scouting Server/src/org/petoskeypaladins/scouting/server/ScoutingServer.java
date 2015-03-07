@@ -78,6 +78,8 @@ public class ScoutingServer implements Runnable {
 			cmdHandler.execute("close", args);
 		} else if(cmd.equalsIgnoreCase("sort")) {
 			cmdHandler.execute("sort", args);
+		} else if(cmd.equalsIgnoreCase("see-all")) {
+			cmdHandler.execute("see-all", args);
 		} else {
 			ServerLog.logError("Command not found");
 		}
@@ -91,7 +93,7 @@ public class ScoutingServer implements Runnable {
 		Date date = new Date();
 				
 		ServerLog.createFile(dateFormat.format(date) + "");
-		ServerLog.logInfo("Robotics Scouting Server v1.0");
+		ServerLog.logInfo("Robotics Scouting Server v1.1 BETA");
 		ServerLog.logInfo("Type 'help' for a list of commands");
 		
 		Scanner scanner = new Scanner(System.in);

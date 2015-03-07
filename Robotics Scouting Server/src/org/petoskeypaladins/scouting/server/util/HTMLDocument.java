@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.ArrayList;
 
 import org.petoskeypaladins.scouting.server.ServerLog;
 
@@ -14,18 +15,16 @@ public class HTMLDocument {
 	
 	String title;
 	
-	StringBuilder template;
-	String data;
+	StringBuilder template, headingData, data, dataString;
 	String tempInfo;
-	String query_1, query_2, query_3, query_4;
+	String query;
+	ArrayList<String> headings;
 	
-	public HTMLDocument(String title, String[] queries, String data) {
+	public HTMLDocument(String title, String query, ArrayList<String> headings, StringBuilder dataString) {
 		this.title = title;
-		this.data = data;
-		this.query_1 = queries[0];
-		this.query_2 = queries[1];
-		this.query_3 = queries[2];
-		this.query_4 = queries[3];
+		this.query = query;
+		this.dataString = dataString;
+		this.headings = headings;
 		createFile();
 	}
 	
@@ -72,16 +71,18 @@ public class HTMLDocument {
 				FileWriter writer = new FileWriter(f);
 				BufferedWriter bw = new BufferedWriter(writer);
 								
-				String[] lines = template.toString().split("_LINE_");
 				tempInfo = "";
-								
+				
+				headingData = new StringBuilder();
+				data = new StringBuilder();
+				for(String s : headings) {
+					headingData.append("<td>" + s + "</td>");
+				}
+				
 				tempInfo = template.toString().replace("_LINE_", "")
-						.replace("<$DATA>", data)
-							.replace("<$QUERY>", "<i>" + query_1 + "</i>")
-								.replace("<$QUERY_1>", query_1)
-									.replace("<$QUERY_2>", query_2)
-										.replace("<$QUERY_3>", query_3)
-											.replace("<$QUERY_4>", query_4);
+					.replace("<$QUERY>", query)
+						.replace("<$DATA>", dataString.toString())
+							.replace("<$HEADERS>", headingData.toString());
 				
 				bw.write(tempInfo);
 				bw.close();

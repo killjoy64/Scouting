@@ -26,7 +26,7 @@ public class CommandList extends Command {
 			ArrayList<String> queries = new ArrayList<String>();
 			
 			StringBuilder data = new StringBuilder();
-			String[] q = new String[4];
+			String[] q;
 			
 			for(File file : f.listFiles()) {
 				try {
@@ -86,19 +86,21 @@ public class CommandList extends Command {
 				}
 			}	
 			
-			q[0] = args[2].replace("_", " ");
-			q[1] = args[1].split("=")[0].replace("_", " ");
-			if(args.length >= 4) {
-				q[0] = args[3].replace("_", " ");
-				q[1] = args[1].split("=")[0].replace("_", " ");
-				q[2] = args[2].split("=")[0].replace("_", " ");
-				q[3] = "";
-			} else {
-				q[2] = "";
-				q[3] = "";
-			}			
+//			q[0] = args[2].replace("_", " ");
+//			q[1] = args[1].split("=")[0].replace("_", " ");
+//			if(args.length >= 4) {
+//				q[0] = args[3].replace("_", " ");
+//				q[1] = args[1].split("=")[0].replace("_", " ");
+//				q[2] = args[2].split("=")[0].replace("_", " ");
+//				q[3] = "";
+//			} else {
+//				q[2] = "";
+//				q[3] = "";
+//			}			
 			
-			new HTMLDocument("[" + "Testing" + "]" + "sort", q, data.toString());
+			q = new String[args.length];
+			
+			//new HTMLDocument("[" + "Testing" + "]" + "sort", q, data.toString());
 
 			queries.clear();
 		} else {

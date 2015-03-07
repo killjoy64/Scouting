@@ -26,6 +26,8 @@ public class CommandSort extends Command {
 		
 		ConcurrentHashMap<File, String> searches = new ConcurrentHashMap<File, String>();
 		ArrayList<String> results = new ArrayList<String>();
+		ArrayList<String> headings = new ArrayList<String>();
+		StringBuilder dataString = new StringBuilder();
 		
 		String searchField = "NULL";
 			
@@ -53,14 +55,14 @@ public class CommandSort extends Command {
 		}
 		
 		// End of the file loop
-		
-		StringBuilder data = new StringBuilder();
+		headings.add(searchField);
+		headings.add("file");
 		
 		for(String r : results) {
 			for(Entry<File, String> entry : searches.entrySet()) {
 				if(entry.getValue().equalsIgnoreCase(r)) {
-					System.out.println(entry.getValue() + ": " + entry.getKey().getName());
-					data.append("<tr><td>" + entry.getValue() + "</td><td>" + entry.getKey().getName() + "</td>");
+					ServerLog.logInfo(entry.getValue() + ": " + entry.getKey().getName());
+					dataString.append("<tr><td>" + entry.getValue() + "</td><td>" + entry.getKey().getName() + "</td>");
 					searches.remove(entry.getKey(), entry.getValue());
 				}
 			}
@@ -73,8 +75,7 @@ public class CommandSort extends Command {
 		queries[2] = "";
 		queries[3] = "";
 		
-		new HTMLDocument("[" + searchField + "]" + "sort", queries, data.toString());
-		
+		new HTMLDocument("[" + "Testing" + "]" + "see-all", searchField, headings, dataString);		
 		} else {
 			ServerLog.logError(getUsage());
 		}
