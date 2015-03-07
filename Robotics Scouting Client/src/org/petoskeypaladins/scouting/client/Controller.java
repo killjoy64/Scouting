@@ -4,27 +4,32 @@ import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Map.Entry;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Stage;
 
 import javax.swing.JOptionPane;
 
@@ -54,15 +59,14 @@ public class Controller implements Initializable {
 	@FXML private ComboBox<String> teleNoodleRate;
 	@FXML private ComboBox<String> teleCoopStack;
 	
-	@FXML private RadioButton teleToteYes;
-	@FXML private RadioButton teleToteNo;
-	@FXML private TextField teleToteRate;
-	@FXML private RadioButton teleContainerYes;
-	@FXML private RadioButton teleContainerNo;
-	@FXML private TextField teleContainerRate;
+	@FXML private ComboBox<String> teleToteManipulation;
+	@FXML private ComboBox<String> teleContainerManipulation;
 	
 	@FXML private ComboBox<String> teleDriver;
 	@FXML private ComboBox<String> teleAlliance;
+	
+	@FXML private TextField stackNumber;
+	@FXML private TextField stackAmount;
 	
 	@FXML private TextField textIP;
 	
@@ -74,8 +78,6 @@ public class Controller implements Initializable {
 	@FXML private RadioMenuItem b3Alliance;
 	
 	private ToggleGroup selectedAllianceGroup;
-	private ToggleGroup toteOptions;
-	private ToggleGroup containerOptions;
 	
 	private FileChooser fileChooser;
 	
@@ -84,14 +86,15 @@ public class Controller implements Initializable {
 	private ObservableList<String> setOptions;
 	private ObservableList<String> loadOptions;
 	
+	private HashMap<String, String> toteStacks;
+	
 	private HashMap<String, String> matchList;
 	
 	@Override
 	public void initialize(URL url, ResourceBundle bundle) {
 		fileChooser = new FileChooser();
 		selectedAllianceGroup = new ToggleGroup();
-		toteOptions = new ToggleGroup();
-		containerOptions = new ToggleGroup();
+		toteStacks = new HashMap<String, String>();
 		matchList = new HashMap<String, String>();
 		
 		assignGroups();
@@ -120,12 +123,12 @@ public class Controller implements Initializable {
 		setOptions.add("N/A");
 		
 		loadOptions.add("Human Station");
-		loadOptions.add("Landfil");
+		loadOptions.add("Landfill");
 		loadOptions.add("N/A");
 		
-		numberTeam.setText("3618");
-		numberRound.setText("2");
-		textCompetition.setText("UNKNOWN");
+		numberTeam.setText(null);
+		numberRound.setText(null);
+		textCompetition.setText(null);
 		textComments.setText("Insert additional comments here");
 		console.setEditable(false);
 		autoDriveZone.setItems(twoOptions);
@@ -138,6 +141,11 @@ public class Controller implements Initializable {
 		teleCoopStack.setItems(twoOptions);
 		teleDriver.setItems(rateOptions);
 		teleAlliance.setItems(rateOptions);
+		teleToteManipulation.setItems(rateOptions);
+		teleContainerManipulation.setItems(rateOptions);
+		stackNumber.setText("1");
+		stackNumber.setEditable(false);
+		stackAmount.setText("0");
 		
 		sendMessage("Successfully initialized Client controller");		
 	}
@@ -157,12 +165,21 @@ public class Controller implements Initializable {
 		b1Alliance.setToggleGroup(selectedAllianceGroup);
 		b2Alliance.setToggleGroup(selectedAllianceGroup);
 		b3Alliance.setToggleGroup(selectedAllianceGroup);
-		
-		teleToteYes.setToggleGroup(toteOptions);
-		teleToteNo.setToggleGroup(toteOptions);
-		
-		teleContainerYes.setToggleGroup(containerOptions);
-		teleContainerNo.setToggleGroup(containerOptions);
+	}
+	
+	@FXML
+	public void addStack(ActionEvent e) {
+		try {
+				if(stackAmount.getText() != null && !stackAmount.getText().equalsIgnoreCase("0")) {
+					int tN = Integer.parseInt(stackNumber.getText());
+					tN++;
+					toteStacks.put(stackNumber.getText(), stackAmount.getText());					
+					stackNumber.setText(tN + "");
+					stackAmount.setText("");
+					
+				}
+		} catch (Exception ex){
+		}
 	}
 	
 	@FXML 
@@ -215,7 +232,18 @@ public class Controller implements Initializable {
 	
 	@FXML 
 	public void showAbout(ActionEvent e) {
-		// Ugh... TODO - Create new XML file for the about window
+		Stage stage = new Stage();
+		stage.setTitle("About the 2015 Scouting Program");
+		Pane pane = null;
+		ScoutingClient.setStage(stage);
+		try {
+			pane = FXMLLoader.load(getClass().getResource("xml/About.fxml"));
+			Scene scene = new Scene(pane);
+			stage.setScene(scene);
+			stage.setResizable(false);
+			stage.show();			
+		} catch (IOException e1) {
+		}
 	}
 	
 	@FXML
@@ -274,10 +302,13 @@ public class Controller implements Initializable {
 								&& teleCanNoodle.getSelectionModel().getSelectedItem() != null
 									&& teleNoodleRate.getSelectionModel().getSelectedItem() != null
 										&& teleCoopStack.getSelectionModel().getSelectedItem() != null
-											&& toteOptions.getSelectedToggle() != null
-												&& containerOptions.getSelectedToggle() != null
+											&& teleToteManipulation.getSelectionModel().getSelectedItem() != null
+												&& teleContainerManipulation.getSelectionModel().getSelectedItem() != null
 													&& teleDriver.getSelectionModel().getSelectedItem() != null
-														&& teleAlliance.getSelectionModel().getSelectedItem() != null) {
+														&& teleAlliance.getSelectionModel().getSelectedItem() != null
+															&& numberTeam.getText() != null
+																&& numberRound.getText() != null
+																	&& textCompetition.getText() != null) {
 			if(!matchList.isEmpty()) {
 				// Send all data blah-blah blah
 				
@@ -285,17 +316,24 @@ public class Controller implements Initializable {
 				try {
 					int round = Integer.parseInt(numberRound.getText());
 					round++;
-					System.out.println(round);
 					if(matchList.containsKey(round + "")) {
 						numberRound.setText(round + "");
 						numberTeam.setText(matchList.get(round + ""));
 					}
 				} catch(Exception ex) {
-					
+					numberTeam.setText(null);
+				}
+			} else {
+				try {
+					int round = Integer.parseInt(numberRound.getText());
+					round++;
+					numberRound.setText(round + "");	
+				} catch(Exception ex) {
+					numberTeam.setText(null);
 				}
 			}
 			//Send all the data
-			handle(e);
+			//handle(e);
 			
 			JOptionPane.showConfirmDialog(null, "Successfully validated data and sent the form!", "Gratz m8 you did it", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE);
 			
@@ -308,10 +346,13 @@ public class Controller implements Initializable {
 			teleCanNoodle.getSelectionModel().clearSelection();
 			teleCoopStack.getSelectionModel().clearSelection();
 			teleNoodleRate.getSelectionModel().clearSelection();
-			toteOptions.selectToggle(null);
-			containerOptions.selectToggle(null);
+			teleToteManipulation.getSelectionModel().clearSelection();
+			teleContainerManipulation.getSelectionModel().clearSelection();
 			teleDriver.getSelectionModel().clearSelection();
 			teleAlliance.getSelectionModel().clearSelection();
+			stackNumber.setText("1");
+			stackAmount.setText(null);
+			toteStacks.clear();
 		} else {
 			JOptionPane.showConfirmDialog(null, "Please fill out the entire form!", "Are you serious, bro?", JOptionPane.OK_OPTION, JOptionPane.ERROR_MESSAGE);
 		}
@@ -353,16 +394,31 @@ public class Controller implements Initializable {
 	   	form.addObjectField("Round Number", numberRound.getText());
 	   	form.addObjectField("Auto Drive Zone", autoDriveZone.getSelectionModel().getSelectedItem());
 	   	form.addObjectField("Auto Completed Tote Stack", autoToteStacks.getSelectionModel().getSelectedItem());
-	   	form.addObjectField("Auto Completed Container Set", autoContainerSets.getSelectionModel().getSelectedItem());
-	   	form.addObjectField("Auto Completed Tote Set", autoToteSets.getSelectionModel().getSelectedItem());
+	   	form.addObjectField("Auto Containers", autoContainerSets.getSelectionModel().getSelectedItem());
+	   	form.addObjectField("Auto Totes", autoToteSets.getSelectionModel().getSelectedItem());
 	   	form.addObjectField("Loading Method", teleLoading.getSelectionModel().getSelectedItem());
 	   	form.addObjectField("Noodle Functionality", teleCanNoodle.getSelectionModel().getSelectedItem());
 	   	form.addObjectField("Noodle Effectiveness", teleNoodleRate.getSelectionModel().getSelectedItem());
 	   	form.addObjectField("Coopertition Stack", teleCoopStack.getSelectionModel().getSelectedItem());
-	   	form.addObjectField("Tote Manipulation", ((RadioButton)toteOptions.getSelectedToggle()).getText() + "(" + teleToteRate.getText() + ")");
-	   	form.addObjectField("Container Manipulation", ((RadioButton)containerOptions.getSelectedToggle()).getText() + "(" + teleContainerRate.getText() + ")");
+	   	form.addObjectField("Tote Manipulation", teleToteManipulation.getSelectionModel().getSelectedItem());
+	   	form.addObjectField("Container Manipulation", teleContainerManipulation.getSelectionModel().getSelectedItem());
 	   	form.addObjectField("Driver Quality", teleDriver.getSelectionModel().getSelectedItem());
 	   	form.addObjectField("Alliance Cooperation", teleAlliance.getSelectionModel().getSelectedItem());
+	   	
+	   	if(!toteStacks.isEmpty()) {
+	   		StringBuilder stacks = new StringBuilder();
+	   		int size = 0;
+	   		for(Entry<String, String> entry : toteStacks.entrySet()) {
+	   			if(size > 0) {
+	   				stacks.append("," + entry.getKey() + "-" + entry.getValue());
+	   			} else {
+	   				stacks.append(entry.getKey() + "-" + entry.getValue());	   				
+	   			}
+	   			size++;
+	   		}
+	   		form.addObjectField("Tote Stacks", stacks.toString());
+	   	}
+	   	
 	}
 	
 }
