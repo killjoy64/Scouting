@@ -105,22 +105,35 @@
                   <Font size="22.0" />
                </font>
             </Label>
-            <Label text="What Does Their Robot Do?" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="7" />
-            <TextField GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="7" />
-            <Label prefHeight="17.0" prefWidth="160.0" text="Fouls" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="16" GridPane.rowSpan="2">
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Label>
-            <Label text="Any Fouls the Robot Made?" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="18" />
-            <TextField GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="18" />
-            <TextField GridPane.columnIndex="5" GridPane.rowIndex="18">
-               <GridPane.margin>
-                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-               </GridPane.margin>
-            </TextField>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Add" textAlignment="CENTER" GridPane.columnIndex="6" GridPane.rowIndex="18" />
             <Button mnemonicParsing="false" onAction="#submitData" text="Submit" GridPane.columnIndex="5" GridPane.rowIndex="26" />
+            <Label text="Robot drives to Auto-Zone?" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="7" />
+            <ComboBox fx:id="autoDriveZone" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+            <Label text="Any tote sets?" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="9" />
+            <ComboBox fx:id="autoToteSets" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="9" />
+            <Label text="Completed Tote Stack?" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="7" />
+            <ComboBox fx:id="autoToteStacks" prefWidth="150.0" GridPane.columnIndex="7" GridPane.rowIndex="7" />
+            <Label text="Any Container sets?" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="9" />
+            <ComboBox fx:id="autoContainerSets" prefWidth="150.0" GridPane.columnIndex="7" GridPane.rowIndex="9" />
+            <Label text="Primary Method of Loading" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="13" />
+            <ComboBox fx:id="teleLoading" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="13" />
+            <Label text="Do they throw noodles?" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="13" />
+            <ComboBox fx:id="teleCanNoodle" prefWidth="150.0" GridPane.columnIndex="7" GridPane.rowIndex="13" />
+            <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Is it effective?" textAlignment="RIGHT" GridPane.columnIndex="5" GridPane.rowIndex="15" />
+            <ComboBox fx:id="teleNoodleRate" prefWidth="150.0" GridPane.columnIndex="7" GridPane.rowIndex="15" />
+            <Label text="Coopertition Stack?" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="15" />
+            <ComboBox fx:id="teleCoopStack" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="15" />
+            <Label text="Tote Manipulation" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="17" />
+            <RadioButton fx:id="teleToteYes" mnemonicParsing="false" text="Yes" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="17" />
+            <RadioButton fx:id="teleToteNo" mnemonicParsing="false" text="No" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="17" />
+            <TextField fx:id="teleToteRate" GridPane.columnIndex="5" GridPane.rowIndex="17" />
+            <Label text="Container Manipulation" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="19" />
+            <RadioButton fx:id="teleContainerYes" mnemonicParsing="false" text="Yes" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="19" />
+            <RadioButton fx:id="teleContainerNo" mnemonicParsing="false" text="No" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="19" />
+            <TextField fx:id="teleContainerRate" GridPane.columnIndex="5" GridPane.rowIndex="19" />
+            <Label text="Quality of the Drive Team" GridPane.columnIndex="7" GridPane.columnSpan="2" GridPane.rowIndex="17" />
+            <Label text="Alliance Cooperation" GridPane.columnIndex="7" GridPane.columnSpan="2" GridPane.rowIndex="19" />
+            <ComboBox fx:id="teleDriver" prefWidth="150.0" GridPane.columnIndex="9" GridPane.rowIndex="17" />
+            <ComboBox fx:id="teleAlliance" prefWidth="150.0" GridPane.columnIndex="9" GridPane.rowIndex="19" />
          </children>
       </GridPane>
       <MenuBar maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="800.0">
@@ -166,7 +179,7 @@
       </MenuBar>
       <AnchorPane layoutY="511.0" prefHeight="135.0" prefWidth="800.0">
          <children>
-            <TextArea fx:id="console" layoutY="-5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="136.0" prefWidth="800.0" />
+            <TextArea fx:id="console" layoutY="-5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="135.0" prefWidth="800.0" />
          </children>
       </AnchorPane>
    </children>
