@@ -89,6 +89,7 @@ public class Controller implements Initializable {
 	private HashMap<String, String> toteStacks;
 	
 	private HashMap<String, String> matchList;
+	private HashMap<Integer, String> teamList;
 	
 	@Override
 	public void initialize(URL url, ResourceBundle bundle) {
@@ -96,6 +97,7 @@ public class Controller implements Initializable {
 		selectedAllianceGroup = new ToggleGroup();
 		toteStacks = new HashMap<String, String>();
 		matchList = new HashMap<String, String>();
+		teamList = new HashMap<Integer, String>();
 		
 		assignGroups();
 		
@@ -267,11 +269,26 @@ public class Controller implements Initializable {
 							}
 						} else {
 							try {
-								String[] matches = line.split(":")[1].split(",");
-								matchList.put(matches[0], matches[1]);
+								if(!line.contains("ID:")) {
+									String[] matches = line.split(":");
+									String[] matchRes = matches[1].split(",");
+									if(matchRes.length > 1) {
+										matchList.put(matchRes[0], matchRes[1]);
+									}
+								} else {
+									
+								}
 							} catch(IndexOutOfBoundsException a) {
+								a.printStackTrace();
 								break;
 							}
+						}
+						// This is a team ID
+						if(line.contains("ID:") && !line.contains("TEAMLIST")) {
+							String[] team = line.split(":")[1].split(",");
+							int teamID = Integer.parseInt(team[0]);
+							String teamName = team[1];
+							teamList.put(teamID, teamName);
 						}
 					}
 					br.close();
@@ -280,6 +297,8 @@ public class Controller implements Initializable {
 						numberRound.setText("1");
 						numberTeam.setText(matchList.get("1"));
 					}
+					
+					ScoutingClient.getStage().setTitle(ScoutingClient.TITLE + " " + ScoutingClient.VERSION + " - " + alliance.toUpperCase());
 					
 				} catch (Exception e1) {
 					e1.printStackTrace();

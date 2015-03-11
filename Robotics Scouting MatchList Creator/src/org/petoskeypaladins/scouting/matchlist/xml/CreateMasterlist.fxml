@@ -6,8 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="200.0" prefWidth="300.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="org.petoskeypaladins.scouting.matchlist.SecondaryController">
+<AnchorPane prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.petoskeypaladins.scouting.matchlist.SecondaryController">
    <children>
       <GridPane prefHeight="200.0" prefWidth="300.0">
         <columnConstraints>
@@ -21,8 +20,9 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Button fx:id="br1" mnemonicParsing="false" onAction="#openFileChooser" text="Browse" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
@@ -37,7 +37,7 @@
             <TextField fx:id="blue_1" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField fx:id="blue_2" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <TextField fx:id="blue_3" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <Button mnemonicParsing="false" onAction="#createMasterlist" text="Create" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+            <Button mnemonicParsing="false" onAction="#createMasterlist" text="Create" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
             <Label text="Red 1" GridPane.halignment="CENTER">
                <GridPane.margin>
                   <Insets />
@@ -48,6 +48,9 @@
             <Label text="Blue 1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
             <Label text="Blue 2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
             <Label text="Blue 3" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+            <Label text="Teamlist" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+            <TextField fx:id="teamlist" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Button fx:id="tb" mnemonicParsing="false" onAction="#openFileChooser" text="Browse" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
          </children>
       </GridPane>
    </children>

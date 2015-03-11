@@ -12,6 +12,9 @@ public class ScoutingClient extends Application {
 
 	private static Stage appStage;
 	
+	public static String TITLE = "Scouting Program 2015 - Recycle Rush";
+	public static String VERSION = "(v1.11 - BETA)";
+	
 	@Override
 	public void start(Stage primaryStage) {
 		
@@ -23,7 +26,7 @@ public class ScoutingClient extends Application {
 			Scene scene = new Scene(root);
 			
 			primaryStage.setScene(scene);
-			primaryStage.setTitle("Scouting Program 2015 - Recycle Rush (v1.1 - BETA)");
+			primaryStage.setTitle(TITLE + " " + VERSION);
 			primaryStage.setResizable(false);
 			primaryStage.show();
 				

@@ -84,20 +84,24 @@ public class CommandSort extends Command {
 				keys.add(team);
 			}
 			
-			for(int i : keys) {
+			int teamNum = 0;
+			for(int i : keys) {	
+				teamNum++;
 				ScoutingForm resultForm = dataResults.get(i + "");
 				dataString.append("<tr>");
 				dataString.append("<td>" + resultForm.getObjectField(whatToSearchFor) + "</td>");
 				int c = 0;
 				for(String s : resultForm.readAll()) {
 					c++;
-					System.out.println(c);
-					String[] objects = s.split(": ");
-					if(!objects[0].equalsIgnoreCase(whatToSearchFor)) {
-						if(!headings.contains(objects[0])) {
-							headings.add(objects[0]);
-						} else {
-							dataString.append("<td>" + objects[1] + "</td>");
+					
+					if(c <= 15 || teamNum <= 1) {
+						String[] objects = s.split(": ");
+						if(!objects[0].equalsIgnoreCase(whatToSearchFor)) {
+							if(!headings.contains(objects[0])) {
+								headings.add(objects[0]);
+							} else {
+								dataString.append("<td>" + objects[1] + "</td>");
+							}
 						}
 					}
 						

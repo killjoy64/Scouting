@@ -24,6 +24,7 @@ public class SecondaryController implements Initializable {
 	@FXML TextField blue_1;
 	@FXML TextField blue_2;
 	@FXML TextField blue_3;
+	@FXML TextField teamlist;
 	
 	private File[] matchFiles;
 	private FileChooser fileChooser;
@@ -32,7 +33,7 @@ public class SecondaryController implements Initializable {
 	
 	@Override
 	public void initialize(URL url, ResourceBundle bundle) {
-		matchFiles = new File[6];
+		matchFiles = new File[7];
 		fileChooser = new FileChooser();
 		
 		defaultText = "No File Selected";
@@ -43,6 +44,7 @@ public class SecondaryController implements Initializable {
 		blue_1.setEditable(false);
 		blue_2.setEditable(false);
 		blue_3.setEditable(false);
+		teamlist.setEditable(false);
 		
 		red_1.setText(defaultText);
 		red_2.setText(defaultText);
@@ -50,6 +52,7 @@ public class SecondaryController implements Initializable {
 		blue_1.setText(defaultText);
 		blue_2.setText(defaultText);
 		blue_3.setText(defaultText);
+		teamlist.setText(defaultText);
 	}
 
 	@FXML void openFileChooser(ActionEvent e) {
@@ -79,13 +82,18 @@ public class SecondaryController implements Initializable {
 				File f = fileChooser.showOpenDialog(MatchListCreator.getStage());
 				matchFiles[5] = f;
 				blue_3.setText(f.getPath());
+			} else if(node.equalsIgnoreCase("tb")) {
+				File f = fileChooser.showOpenDialog(MatchListCreator.getStage());
+				matchFiles[6] = f;
+				teamlist.setText(f.getPath());
 			}
 		}
 	}
 	
 	@FXML void createMasterlist(ActionEvent e) {
 		if(!red_1.getText().equalsIgnoreCase(defaultText) && !red_2.getText().equalsIgnoreCase(defaultText) && !red_3.getText().equalsIgnoreCase(defaultText) && 
-				!blue_1.getText().equalsIgnoreCase(defaultText) && !blue_2.getText().equalsIgnoreCase(defaultText) && !blue_3.getText().equalsIgnoreCase(defaultText)) {
+				!blue_1.getText().equalsIgnoreCase(defaultText) && !blue_2.getText().equalsIgnoreCase(defaultText) && !blue_3.getText().equalsIgnoreCase(defaultText)
+					&& !teamlist.getText().equalsIgnoreCase(defaultText)) {
 			// Create the file here
 			StringBuilder data = new StringBuilder();
 			String prefix = "";
@@ -107,6 +115,8 @@ public class SecondaryController implements Initializable {
 							prefix = "b2";
 						} else if(line.equalsIgnoreCase("Blue 3")) {
 							prefix = "b3";
+						} else if(line.equalsIgnoreCase("TEAMLIST:")) {
+							prefix = "ID";
 						}
 						data.append(prefix + ":" + line + "_LINE_");
 					}
