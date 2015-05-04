@@ -79,10 +79,10 @@ public class ScoutingForm implements Serializable {
 			Entry entry = (Entry) sofi.next();
 			tmp.add(entry.getKey() + ": " + entry.getValue());
 		}
-		while(tofi.hasNext()) {
-			Entry entry = (Entry) tofi.next();
-			tmp.add(entry.getKey() + ": " + entry.getValue());
-		}
+//		while(tofi.hasNext()) {
+//			Entry entry = (Entry) tofi.next();
+//			tmp.add(entry.getKey() + ": " + entry.getValue());
+//		}
 		return tmp;
 	}
 	

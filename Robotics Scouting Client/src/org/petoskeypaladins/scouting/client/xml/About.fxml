@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="325.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="150.0" fitWidth="400.0" layoutY="88.0" pickOnBounds="true">
+         <image>
+            <Image url="@../res/Paladins%20Logo.jpg" />
+         </image>
+      </ImageView>
+      <Text layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The 2015 Recycle Rush Scouting Program was originally" wrappingWidth="400.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="created by Kyle Flynn ('16) of the Petoskey Paladins" wrappingWidth="400.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text layoutY="307.0" strokeType="OUTSIDE" strokeWidth="0.0" text="©2015 Petoskey Paladins Team 3618" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="400.0" />
+   </children>
+</AnchorPane>

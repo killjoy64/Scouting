@@ -2,7 +2,7 @@ package org.petoskeypaladins.scouting.server.commands;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Map.Entry;
+import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.petoskeypaladins.scouting.server.ServerLog;
@@ -24,28 +24,37 @@ public class CommandSort extends Command {
 		
 		ScoutingForm tempForm;
 		
-		ConcurrentHashMap<File, String> searches = new ConcurrentHashMap<File, String>();
-		ArrayList<String> results = new ArrayList<String>();
+		ConcurrentHashMap<String, ScoutingForm> dataResults = new ConcurrentHashMap<String, ScoutingForm>();
+		//ArrayList<String> results = new ArrayList<String>();
 		ArrayList<String> headings = new ArrayList<String>();
 		StringBuilder dataString = new StringBuilder();
 		
-		String searchField = "NULL";
+		String whatToSearchFor = "NULL";
 			
 		for(File file : f.listFiles()) {
 			try {
 				tempForm = new ScoutingForm(file.getPath());
 				
-				searchField = args[1].replace("_", " ");	
+				whatToSearchFor = args[1].replace("_", " ");	
 				// Eventually the goal is to sort every file by a certain field (by the same round_number, or competition)
 				
-				if(tempForm.getObjectField(searchField) != null) {
-					String result = (String) tempForm.getObjectField(searchField);
-					if(result.contains(" ")) {
-						result = result.replace(" ", "");
-					}
-					searches.put(file, result);
-					if(!results.contains(result)) {
-						results.add(result);
+				if(tempForm.getObjectField(whatToSearchFor) != null) {
+//					String result = (String) tempForm.getObjectField(whatToSearchFor);
+//					if(result.contains(" ")) {
+//						result = result.replace(" ", "");
+//					}
+//					searches.put(file, result);
+//					if(!results.contains(result)) {
+//						results.add(result);
+//					}
+					for(String data : tempForm.readAll()) {
+						String[] objects = data.split(":");
+						if(objects[1].contains(" ")) {
+							objects[1] = objects[1].replace(" ", "");
+						}
+						if(objects[0].equalsIgnoreCase(whatToSearchFor)) {
+							dataResults.put(objects[1], tempForm);
+						}
 					}
 				}
 				
@@ -55,27 +64,52 @@ public class CommandSort extends Command {
 		}
 		
 		// End of the file loop
-		headings.add(searchField);
-		headings.add("file");
+		headings.add(whatToSearchFor);
 		
-		for(String r : results) {
-			for(Entry<File, String> entry : searches.entrySet()) {
-				if(entry.getValue().equalsIgnoreCase(r)) {
-					ServerLog.logInfo(entry.getValue() + ": " + entry.getKey().getName());
-					dataString.append("<tr><td>" + entry.getValue() + "</td><td>" + entry.getKey().getName() + "</td>");
-					searches.remove(entry.getKey(), entry.getValue());
-				}
+//		for(String r : results) {
+//			for(Entry<File, String> entry : searches.entrySet()) {
+//				if(entry.getValue().equalsIgnoreCase(r)) {
+//					ServerLog.logInfo(entry.getValue() + ": " + entry.getKey().getName());
+//					dataString.append("<tr><td>" + entry.getValue() + "</td><td>" + entry.getKey().getName() + "</td>");
+//					searches.remove(entry.getKey(), entry.getValue());
+//				}
+//			}
+//		}
+		
+		try {
+			TreeSet<Integer> keys = new TreeSet<Integer>();
+			
+			for(String key : dataResults.keySet()) {
+				int team = Integer.parseInt(key);
+				keys.add(team);
 			}
+			
+			for(int i : keys) {
+				ScoutingForm resultForm = dataResults.get(i + "");
+				dataString.append("<tr>");
+				dataString.append("<td>" + resultForm.getObjectField(whatToSearchFor) + "</td>");
+				int c = 0;
+				for(String s : resultForm.readAll()) {
+					c++;
+					System.out.println(c);
+					String[] objects = s.split(": ");
+					if(!objects[0].equalsIgnoreCase(whatToSearchFor)) {
+						if(!headings.contains(objects[0])) {
+							headings.add(objects[0]);
+						} else {
+							dataString.append("<td>" + objects[1] + "</td>");
+						}
+					}
+						
+				}
+				dataString.append("</tr>");
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
 		
-		String[] queries = new String[4];
-		
-		queries[0] = searchField;
-		queries[1] = "file";
-		queries[2] = "";
-		queries[3] = "";
-		
-		new HTMLDocument("[" + "Testing" + "]" + "see-all", searchField, headings, dataString);		
+		new HTMLDocument("[" + "Testing" + "]" + "sort", whatToSearchFor, headings, dataString);		
 		} else {
 			ServerLog.logError(getUsage());
 		}
